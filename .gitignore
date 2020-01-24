@@ -1,1 +1,5 @@
+# Build directory at top level
 /build
+
+# Any auto-generated folders from Visual Studio Code
+.vscode
