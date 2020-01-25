@@ -12,3 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 }
+
+void MainWindow::close()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "PathCAD", "Are you sure you want to quit?", QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        QMainWindow::close();
+}

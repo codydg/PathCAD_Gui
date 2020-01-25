@@ -10,7 +10,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-protected:
+public Q_SLOTS:
+    void close();
 
 private:
 };
