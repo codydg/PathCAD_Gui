@@ -1,9 +1,14 @@
 #include "MainWindow.h"
 
 #include <QShortcut>
-#include <iostream>
+#include <QMessageBox>
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this, SLOT(close()));
+}
+
+MainWindow::~MainWindow()
+{
 }

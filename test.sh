@@ -1,5 +1,5 @@
 #!/bin/bash
 
 cd build
-./PathCAD
+./PathCAD_Gui
 

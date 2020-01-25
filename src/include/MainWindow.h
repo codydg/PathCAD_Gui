@@ -4,12 +4,13 @@
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
 public:
-    MainWindow();
-    ~MainWindow() = default;
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 protected:
 
 private:
-
 };
