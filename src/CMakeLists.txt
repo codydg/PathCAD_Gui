@@ -16,8 +16,17 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(${PROJECT_NAME}
     main.cpp
+
     MainWindow.cpp
     include/MainWindow.h
+
+    Settings.cpp
+    include/Settings.h
+
+    SettingsDialog.cpp
+    include/SettingsDialog.h
+
+    res.qrc
 )
 
 target_link_libraries(${PROJECT_NAME}

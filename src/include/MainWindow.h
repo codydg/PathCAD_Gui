@@ -1,6 +1,12 @@
 #pragma once
 
+#include <mutex>
+
 #include <QMainWindow>
+#include <QCloseEvent>
+#include <QWidget>
+
+#include "Settings.h"
 
 class MainWindow : public QMainWindow
 {
@@ -11,7 +17,12 @@ public:
     ~MainWindow();
 
 public Q_SLOTS:
-    void close();
+    virtual void closeEvent(QCloseEvent *event) override;
+    void aboutUi();
+    void aboutQtUi();
+    void settingsUi();
 
 private:
+    std::mutex settingsMutex;
+    std::shared_ptr<Settings> settings;
 };
