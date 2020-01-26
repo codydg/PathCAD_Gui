@@ -1,5 +1,6 @@
 #!/bin/bash
 
-cd build
+config=RelWithDebInfo
+cd build/$config
 ./PathCAD_Gui
 

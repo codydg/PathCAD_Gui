@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cmake -S src -B build
-
+config=RelWithDebInfo
+cmake -S src -B build/$config -DCMAKE_BUILD_TYPE=$config
