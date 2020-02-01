@@ -1,7 +1,5 @@
 #include "MainWindow.h"
 
-#include <memory>
-
 #include <QShortcut>
 #include <QMessageBox>
 #include <QMenuBar>
