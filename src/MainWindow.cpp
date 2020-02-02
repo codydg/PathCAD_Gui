@@ -5,10 +5,10 @@
 #include <QMenuBar>
 #include <QSplitter>
 #include <QStatusBar>
-#include <QTreeView>
 #include <QGraphicsView>
 
 #include "SettingsDialog.h"
+#include "ModelTree.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Main window area
     auto mainWidget = new QSplitter();
-    auto modelTree = new QTreeView();
+    auto modelTree = new ModelTree();
     mainWidget->addWidget(modelTree);
     auto graphicView = new QGraphicsView();
     mainWidget->addWidget(graphicView);
