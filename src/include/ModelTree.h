@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QTreeView>
+#include <QWidget>
 
 class ModelTree : public QTreeView
 {

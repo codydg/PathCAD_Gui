@@ -20,6 +20,9 @@ add_executable(${PROJECT_NAME}
     MainWindow.cpp
     include/MainWindow.h
 
+    ModelTree.cpp
+    include/ModelTree.h
+
     Settings.cpp
     include/Settings.h
 
