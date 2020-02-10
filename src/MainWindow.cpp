@@ -3,7 +3,6 @@
 #include <QShortcut>
 #include <QMessageBox>
 #include <QMenuBar>
-#include <QSplitter>
 #include <QStatusBar>
 #include <QGraphicsView>
 
@@ -13,11 +12,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    {
-        std::lock_guard<decltype(settingsMutex)> settingsLock(settingsMutex);
-        settings = std::make_shared<Settings>();
-        settings->read();
-    }
+    std::unique_lock<decltype(settingsMutex)> settingsLock(settingsMutex);
+    settings = std::make_shared<Settings>();
+    settings->read();
 
     // Set window settings
     this->setWindowTitle("PathCAD");
@@ -45,13 +42,15 @@ MainWindow::MainWindow(QWidget *parent)
     this->setStatusBar(statusBar);
 
     // Main window area
-    auto mainWidget = new QSplitter();
+    mainSplitter = new QSplitter();
     auto modelTree = new ModelTree();
-    mainWidget->addWidget(modelTree);
+    mainSplitter->addWidget(modelTree);
     auto graphicView = new QGraphicsView();
-    mainWidget->addWidget(graphicView);
+    mainSplitter->addWidget(graphicView);
+    if (settings->mainSplitterData)
+        mainSplitter->restoreState(*settings->mainSplitterData);
 
-    this->setCentralWidget(mainWidget);
+    this->setCentralWidget(mainSplitter);
 
     // Create connections
     connect(exitAction, &QAction::triggered, this, &MainWindow::close);
@@ -69,14 +68,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    std::lock_guard<decltype(settingsMutex)> settingsLock(settingsMutex);
-    auto reply = QMessageBox::Yes;
+    std::unique_lock<decltype(settingsMutex)> settingsLock(settingsMutex);
 
+    auto reply = QMessageBox::Yes;
     if (settings->askBeforeClosing)
         reply = QMessageBox::question(this, "PathCAD", "Are you sure you want to quit?", QMessageBox::Yes|QMessageBox::No);
 
     if (reply == QMessageBox::Yes)
     {
+        settings->mainSplitterData = std::make_unique<QByteArray>(mainSplitter->saveState());
         settings->write();
         event->accept();
     }
@@ -98,7 +98,7 @@ void MainWindow::aboutQtUi()
 
 void MainWindow::settingsUi()
 {
-    std::lock_guard<decltype(settingsMutex)> settingsLock(settingsMutex);
+    std::unique_lock<decltype(settingsMutex)> settingsLock(settingsMutex);
     SettingsDialog settingsDialog(settings, this);
     settingsDialog.exec();
 }

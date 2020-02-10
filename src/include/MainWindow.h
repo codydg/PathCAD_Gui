@@ -1,11 +1,12 @@
 #pragma once
 
-#include <mutex>
+#include <shared_mutex>
 #include <memory>
 
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QWidget>
+#include <QSplitter>
 
 #include "Settings.h"
 
@@ -24,6 +25,9 @@ public Q_SLOTS:
     void settingsUi();
 
 private:
-    std::mutex settingsMutex;
+    std::shared_mutex settingsMutex;
     std::shared_ptr<Settings> settings;
+
+    // For settings storage
+    QSplitter* mainSplitter;
 };

@@ -10,6 +10,11 @@ void Settings::read()
     settings.beginGroup("General");
     askBeforeClosing = settings.value("askBeforeClosing", askBeforeClosing).toBool();
     settings.endGroup();
+
+    settings.beginGroup("System");
+    if (settings.contains("mainSplitterData"))
+        mainSplitterData = std::make_unique<QByteArray>(settings.value("mainSplitterData").toByteArray());
+    settings.endGroup();
 }
 void Settings::write()
 {
@@ -17,5 +22,10 @@ void Settings::write()
 
     settings.beginGroup("General");
     settings.setValue("askBeforeClosing", askBeforeClosing);
+    settings.endGroup();
+
+    settings.beginGroup("System");
+    if (mainSplitterData)
+        settings.setValue("mainSplitterData", *mainSplitterData);
     settings.endGroup();
 }
