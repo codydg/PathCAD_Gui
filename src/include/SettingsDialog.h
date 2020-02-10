@@ -12,6 +12,7 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(std::shared_ptr<Settings> settings, QWidget *parent, Qt::WindowFlags f);
     explicit SettingsDialog(std::shared_ptr<Settings> settings, QWidget *parent = nullptr);
+    virtual ~SettingsDialog() = default;
 
 public Q_SLOTS:
     virtual void applyChanges();

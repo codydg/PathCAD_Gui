@@ -29,6 +29,9 @@ add_executable(${PROJECT_NAME}
     SettingsDialog.cpp
     include/SettingsDialog.h
 
+    PathGroupItem.cpp
+    include/PathGroupItem.h
+
     res.qrc
 )
 

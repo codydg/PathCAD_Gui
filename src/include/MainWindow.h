@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    virtual ~MainWindow();
 
 public Q_SLOTS:
     virtual void closeEvent(QCloseEvent *event) override;
