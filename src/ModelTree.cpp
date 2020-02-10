@@ -3,14 +3,16 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 
-#include "PathGroupItem.h"
-
 ModelTree::ModelTree(QWidget* parent) : QTreeView(parent)
 {
+    setEditTriggers(EditTrigger::EditKeyPressed);
+
     newPathGroup = new QAction("New Path Group", this);
     connect(newPathGroup, &QAction::triggered, this, &ModelTree::createNewPathGroup);
 
     dataModel = new QStandardItemModel();
+    dataModel->setHorizontalHeaderLabels({"Model Tree"});
+    connect(dataModel, &QStandardItemModel::itemChanged, this, &ModelTree::itemChanged);
     setModel(dataModel);
 }
 
@@ -26,4 +28,9 @@ void ModelTree::contextMenuEvent(QContextMenuEvent *event)
 void ModelTree::createNewPathGroup()
 {
     dataModel->appendRow(new PathGroupItem());
+}
+
+void ModelTree::itemChanged(QStandardItem* item) const
+{
+    dynamic_cast<PathGroupItem*>(item)->itemChanged();
 }

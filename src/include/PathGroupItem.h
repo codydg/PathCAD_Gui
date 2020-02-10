@@ -9,6 +9,8 @@ class PathGroupItem : public QStandardItem
 public:
     PathGroupItem();
     virtual ~PathGroupItem() = default;
+    void itemChanged();
+
 protected:
     PathGroup pathGroup;
 };
