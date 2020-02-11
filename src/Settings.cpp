@@ -12,6 +12,8 @@ void Settings::read()
     settings.endGroup();
 
     settings.beginGroup("System");
+    if (settings.contains("mainWindowData"))
+        mainWindowData = std::make_unique<QByteArray>(settings.value("mainWindowData").toByteArray());
     if (settings.contains("mainSplitterData"))
         mainSplitterData = std::make_unique<QByteArray>(settings.value("mainSplitterData").toByteArray());
     settings.endGroup();
@@ -25,6 +27,8 @@ void Settings::write()
     settings.endGroup();
 
     settings.beginGroup("System");
+    if (mainWindowData)
+        settings.setValue("mainWindowData", *mainWindowData);
     if (mainSplitterData)
         settings.setValue("mainSplitterData", *mainSplitterData);
     settings.endGroup();

@@ -52,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setCentralWidget(mainSplitter);
 
+    if (settings->mainWindowData)
+        this->restoreState(*settings->mainWindowData);
+
     // Create connections
     connect(exitAction, &QAction::triggered, this, &MainWindow::close);
     connect(aboutAction, &QAction::triggered, this, &MainWindow::aboutUi);
@@ -76,6 +79,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     if (reply == QMessageBox::Yes)
     {
+        settings->mainWindowData = std::make_unique<QByteArray>(this->saveState());
         settings->mainSplitterData = std::make_unique<QByteArray>(mainSplitter->saveState());
         settings->write();
         event->accept();
