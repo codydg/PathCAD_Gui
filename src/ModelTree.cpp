@@ -7,8 +7,8 @@ ModelTree::ModelTree(QWidget* parent) : QTreeView(parent)
 {
     setEditTriggers(EditTrigger::EditKeyPressed);
 
-    newPathGroup = new QAction("New Path Group", this);
-    connect(newPathGroup, &QAction::triggered, this, &ModelTree::createNewPathGroup);
+    newPathGroupAction = new QAction("New Path Group", this);
+    connect(newPathGroupAction, &QAction::triggered, this, &ModelTree::createNewPathGroup);
 
     dataModel = new QStandardItemModel();
     dataModel->setHorizontalHeaderLabels({"Model Tree"});
@@ -20,7 +20,19 @@ ModelTree::ModelTree(QWidget* parent) : QTreeView(parent)
 void ModelTree::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu menu(this);
-    menu.addAction(newPathGroup);
+    auto itemIndex = indexAt(event->pos());
+    if (itemIndex.isValid())
+    {
+        // User right-clicked item in tree
+        auto item = dynamic_cast<PathGroupItem*>(dataModel->itemFromIndex(itemIndex));
+        auto lineAction = menu.addAction("New Line Path");
+        connect(lineAction, &QAction::triggered, [item = item](){ item->newLinePath({}, {}, 0.0); });
+    }
+    else
+    {
+        // User right-clicked tree
+        menu.addAction(newPathGroupAction);
+    }
     menu.exec(event->globalPos());
 }
 #endif

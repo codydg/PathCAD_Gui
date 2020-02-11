@@ -28,5 +28,5 @@ private slots:
 
 protected:
     QStandardItemModel* dataModel;
-    QAction* newPathGroup;
+    QAction* newPathGroupAction;
 };
