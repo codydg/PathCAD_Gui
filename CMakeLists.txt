@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(PathCAD_Gui LANGUAGES CXX)
+project(PathCAD_Gui)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -13,26 +13,27 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_executable(${PROJECT_NAME}
+set(SRC_FILES
     src/main.cpp
-
     src/MainWindow.cpp
-    include/MainWindow.h
-
     src/ModelTree.cpp
-    include/ModelTree.h
-
     src/Settings.cpp
-    include/Settings.h
-
     src/SettingsDialog.cpp
+    src/res.qrc
+
+    TreeItems/src/PathGroupItem.cpp
+)
+
+set(HEADER_FILES
+    include/MainWindow.h
+    include/ModelTree.h
+    include/Settings.h
     include/SettingsDialog.h
 
-    src/PathGroupItem.cpp
-    include/PathGroupItem.h
-
-    src/res.qrc
+    TreeItems/include/PathGroupItem.h
 )
+
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE PathCAD_Lib
@@ -42,6 +43,7 @@ target_link_libraries(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE ${CMAKE_CURRENT_LIST_DIR}/include
+    PRIVATE ${CMAKE_CURRENT_LIST_DIR}/TreeItems/include
 )
 
 install(TARGETS ${PROJECT_NAME}
