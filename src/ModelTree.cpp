@@ -80,7 +80,7 @@ void ModelTree::addLinePath(ModelTreeItem* item)
     switch (id)
     {
         case ModelTreeItemId::PATH_GROUP:
-            dynamic_cast<PathGroupItem*>(item)->newLinePath();
+            PathGroupItem::newLinePath(dynamic_cast<PathGroupItem*>(item));
             break;
         case ModelTreeItemId::LINE_PATH:
             throw std::runtime_error("Cannot add Line Path to ModelTreeItem type: " + static_cast<int>(id));
