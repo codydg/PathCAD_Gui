@@ -7,8 +7,7 @@
 #include <QWidget>
 #include <QAction>
 
-#include "PathGroupItem.h"
-#include "GenericPath.h"
+#include "ModelTreeItem.h"
 
 class ModelTree : public QTreeView
 {
@@ -25,6 +24,11 @@ protected:
 
 private slots:
     void itemChanged(QStandardItem* item) const;
+
+private:
+    void removeItem(ModelTreeItem* item);
+    void addLinePath(ModelTreeItem* item);
+    void newLinePath();
 
 protected:
     QStandardItemModel* dataModel;

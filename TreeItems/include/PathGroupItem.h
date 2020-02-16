@@ -1,18 +1,29 @@
 #pragma once
 
-#include <QStandardItem>
+#include <QObject>
 
-#include "PathGroup.h"
-#include "LinePath.h"
+#include "ModelTreeItem.h"
 
-class PathGroupItem : public QStandardItem
+class PathGroup;
+
+class PathGroupItem : public QObject, public ModelTreeItem
 {
+    Q_OBJECT
 public:
     PathGroupItem();
-    virtual ~PathGroupItem() = default;
-    void itemChanged();
-    void newLinePath(GenericPath::PathElement start, GenericPath::PathElement end, double totalTime);
+
+    // Overriden Pure Virtual functions
+    virtual void itemChanged() override;
+    virtual std::shared_ptr<GenericPath> getPath() const override;
+
+    // Overriden Virtual functions
+    virtual void removeItem(ModelTreeItem* item) override;
+    virtual QList<QAction*> getContextActions() const override;
+
+    // Non-virtual functions
+    void newLinePath();
+    void newPathGroup();
 
 protected:
-    PathGroup pathGroup;
+    std::shared_ptr<PathGroup> pathGroup;
 };

@@ -1,11 +1,16 @@
 #include "ModelTree.h"
 
+#include <iostream>
+
 #include <QMenu>
 #include <QContextMenuEvent>
+
+#include "PathGroupItem.h"
 
 ModelTree::ModelTree(QWidget* parent) : QTreeView(parent)
 {
     setEditTriggers(EditTrigger::EditKeyPressed);
+    setItemsExpandable(false);
 
     newPathGroupAction = new QAction("New Path Group", this);
     connect(newPathGroupAction, &QAction::triggered, this, &ModelTree::createNewPathGroup);
@@ -13,6 +18,7 @@ ModelTree::ModelTree(QWidget* parent) : QTreeView(parent)
     dataModel = new QStandardItemModel();
     dataModel->setHorizontalHeaderLabels({"Model Tree"});
     connect(dataModel, &QStandardItemModel::itemChanged, this, &ModelTree::itemChanged);
+    connect(dataModel, &QStandardItemModel::rowsInserted, [view = this](const QModelIndex &parent, int first, int last){ view->expand(parent); });
     setModel(dataModel);
 }
 
@@ -24,9 +30,25 @@ void ModelTree::contextMenuEvent(QContextMenuEvent *event)
     if (itemIndex.isValid())
     {
         // User right-clicked item in tree
-        auto item = dynamic_cast<PathGroupItem*>(dataModel->itemFromIndex(itemIndex));
-        auto lineAction = menu.addAction("New Line Path");
-        connect(lineAction, &QAction::triggered, [item = item](){ item->newLinePath({}, {}, 0.0); });
+        auto item = dynamic_cast<ModelTreeItem*>(dataModel->itemFromIndex(itemIndex));
+
+        // Add item-dependant actions
+        menu.addActions(item->getContextActions());
+
+        // Add delete action
+        auto deleteAction = menu.addAction("Delete");
+        auto rawItemParent = item->parent();
+        if (rawItemParent)
+        {
+            auto itemParent = dynamic_cast<ModelTreeItem*>(rawItemParent);
+            connect(deleteAction, &QAction::triggered,
+                    std::bind(&ModelTreeItem::removeItem, itemParent, item));
+        }
+        else
+        {
+            connect(deleteAction, &QAction::triggered,
+                    std::bind(&ModelTree::removeItem, this, item));
+        }
     }
     else
     {
@@ -44,5 +66,31 @@ void ModelTree::createNewPathGroup()
 
 void ModelTree::itemChanged(QStandardItem* item) const
 {
-    dynamic_cast<PathGroupItem*>(item)->itemChanged();
+    dynamic_cast<ModelTreeItem*>(item)->itemChanged();
+}
+
+void ModelTree::removeItem(ModelTreeItem* item)
+{
+    dataModel->removeRow(item->row());
+}
+
+void ModelTree::addLinePath(ModelTreeItem* item)
+{
+    const auto& id = item->getId();
+    switch (id)
+    {
+        case ModelTreeItemId::PATH_GROUP:
+            dynamic_cast<PathGroupItem*>(item)->newLinePath();
+            break;
+        case ModelTreeItemId::LINE_PATH:
+            throw std::runtime_error("Cannot add Line Path to ModelTreeItem type: " + static_cast<int>(id));
+            break;
+        default:
+            std::cout << "Warning: Unknown ModelTreeItem type: " << static_cast<int>(id) << std::endl;
+    }
+}
+
+void ModelTree::newLinePath()
+{
+
 }

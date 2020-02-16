@@ -21,6 +21,8 @@ set(SRC_FILES
     src/SettingsDialog.cpp
     src/res.qrc
 
+    TreeItems/src/ModelTreeItem.cpp
+    TreeItems/src/LinePathItem.cpp
     TreeItems/src/PathGroupItem.cpp
 )
 
@@ -30,6 +32,8 @@ set(HEADER_FILES
     include/Settings.h
     include/SettingsDialog.h
 
+    TreeItems/include/ModelTreeItem.h
+    TreeItems/include/LinePathItem.h
     TreeItems/include/PathGroupItem.h
 )
 
