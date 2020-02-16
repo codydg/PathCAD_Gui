@@ -46,16 +46,16 @@ QList<QAction*> PathGroupItem::getContextActions() const
     return actions;
 }
 
-void PathGroupItem::newLinePath(PathGroupItem* foo)
+void PathGroupItem::newLinePath(PathGroupItem* pgi)
 {
     auto item = new LinePathItem({}, {}, 0.0);
-    foo->appendRow(item);
-    foo->pathGroup->addPath(item->getPath());
+    pgi->appendRow(item);
+    pgi->pathGroup->addPath(item->getPath());
 }
 
-void PathGroupItem::newPathGroup(PathGroupItem* foo)
+void PathGroupItem::newPathGroup(PathGroupItem* pgi)
 {
     auto item = new PathGroupItem();
-    foo->appendRow(item);
-    foo->pathGroup->addPath(item->getPath());
+    pgi->appendRow(item);
+    pgi->pathGroup->addPath(item->getPath());
 }

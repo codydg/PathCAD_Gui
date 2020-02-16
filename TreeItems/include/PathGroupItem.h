@@ -18,8 +18,8 @@ public:
     virtual QList<QAction*> getContextActions() const override;
 
     // Non-virtual functions
-    static void newLinePath(PathGroupItem* foo);
-    static void newPathGroup(PathGroupItem* foo);
+    static void newLinePath(PathGroupItem* pgi);
+    static void newPathGroup(PathGroupItem* pgi);
 
 protected:
     std::shared_ptr<PathGroup> pathGroup;
