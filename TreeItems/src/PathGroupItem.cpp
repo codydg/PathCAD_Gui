@@ -33,12 +33,14 @@ QList<QAction*> PathGroupItem::getContextActions() const
 
     // New Line Path
     auto newLine = new QAction("New Line Path");
-    connect(newLine, &QAction::triggered, std::bind(&PathGroupItem::newLinePath, this));
+    //connect(newLine, &QAction::triggered, std::bind(&PathGroupItem::newLinePath, this));
+    connect(newLine, &QAction::triggered, this, &PathGroupItem::newLinePath);
     actions.push_back(newLine);
 
     // New Path Group
     auto newGroup = new QAction("New Path Group");
-    connect(newGroup, &QAction::triggered, std::bind(&PathGroupItem::newPathGroup, this));
+    //connect(newGroup, &QAction::triggered, std::bind(&PathGroupItem::newPathGroup, this));
+    connect(newGroup, &QAction::triggered, this, &PathGroupItem::newPathGroup);
     actions.push_back(newGroup);
 
     return actions;

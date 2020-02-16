@@ -3,3 +3,6 @@
 
 # Any auto-generated folders from Visual Studio Code
 .vscode
+
+#useful for YCM vim plugin
+compile_commands.json
