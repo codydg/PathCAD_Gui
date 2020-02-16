@@ -15,11 +15,11 @@ public:
 
     // Overriden Virtual functions
     virtual void removeItem(ModelTreeItem* item) override;
-    virtual QList<QAction*> getContextActions() const override;
+    virtual QList<QAction*> createContextActions() override;
 
     // Non-virtual functions
-    static void newLinePath(PathGroupItem* pgi);
-    static void newPathGroup(PathGroupItem* pgi);
+    void newLinePath();
+    void newPathGroup();
 
 protected:
     std::shared_ptr<PathGroup> pathGroup;

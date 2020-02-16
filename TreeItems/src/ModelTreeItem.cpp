@@ -12,7 +12,7 @@ void ModelTreeItem::removeItem(ModelTreeItem* item)
     throw std::runtime_error(error.str());
 }
 
-QList<QAction*> ModelTreeItem::getContextActions() const
+QList<QAction*> ModelTreeItem::createContextActions()
 {
     return QList<QAction*>();
 }

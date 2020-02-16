@@ -33,7 +33,7 @@ void ModelTree::contextMenuEvent(QContextMenuEvent *event)
         auto item = dynamic_cast<ModelTreeItem*>(dataModel->itemFromIndex(itemIndex));
 
         // Add item-dependant actions
-        menu.addActions(item->getContextActions());
+        menu.addActions(item->createContextActions());
 
         // Add delete action
         auto deleteAction = menu.addAction("Delete");
@@ -80,7 +80,7 @@ void ModelTree::addLinePath(ModelTreeItem* item)
     switch (id)
     {
         case ModelTreeItemId::PATH_GROUP:
-            PathGroupItem::newLinePath(dynamic_cast<PathGroupItem*>(item));
+            dynamic_cast<PathGroupItem*>(item)->newLinePath();
             break;
         case ModelTreeItemId::LINE_PATH:
             throw std::runtime_error("Cannot add Line Path to ModelTreeItem type: " + static_cast<int>(id));

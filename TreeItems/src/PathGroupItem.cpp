@@ -1,10 +1,10 @@
 #include "PathGroupItem.h"
 
+#include <QObject>
+
 #include "PathGroup.h"
 
 #include "LinePathItem.h"
-
-#include <QObject>
 
 PathGroupItem::PathGroupItem() : ModelTreeItem(ModelTreeItemId::PATH_GROUP)
 {
@@ -29,33 +29,33 @@ void PathGroupItem::removeItem(ModelTreeItem* item)
     removeRow(item->row());
 }
 
-QList<QAction*> PathGroupItem::getContextActions() const
+QList<QAction*> PathGroupItem::createContextActions()
 {
     QList<QAction*> actions;
 
     // New Line Path
     auto newLine = new QAction("New Line Path");
-    QObject::connect(newLine, &QAction::triggered, [this](){newLinePath(const_cast<PathGroupItem*>(this));});
+    QObject::connect(newLine, &QAction::triggered, std::bind(&PathGroupItem::newLinePath, this));
     actions.push_back(newLine);
 
     // New Path Group
     auto newGroup = new QAction("New Path Group");
-    QObject::connect(newGroup, &QAction::triggered, [this](){newPathGroup(const_cast<PathGroupItem*>(this));});
+    QObject::connect(newGroup, &QAction::triggered, std::bind(&PathGroupItem::newPathGroup, this));
     actions.push_back(newGroup);
 
     return actions;
 }
 
-void PathGroupItem::newLinePath(PathGroupItem* pgi)
+void PathGroupItem::newLinePath()
 {
     auto item = new LinePathItem({}, {}, 0.0);
-    pgi->appendRow(item);
-    pgi->pathGroup->addPath(item->getPath());
+    this->appendRow(item);
+    pathGroup->addPath(item->getPath());
 }
 
-void PathGroupItem::newPathGroup(PathGroupItem* pgi)
+void PathGroupItem::newPathGroup()
 {
     auto item = new PathGroupItem();
-    pgi->appendRow(item);
-    pgi->pathGroup->addPath(item->getPath());
+    this->appendRow(item);
+    pathGroup->addPath(item->getPath());
 }
