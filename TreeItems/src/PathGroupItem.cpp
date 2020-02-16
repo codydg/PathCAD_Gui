@@ -1,5 +1,7 @@
 #include "PathGroupItem.h"
 
+#include <QObject>
+
 #include "PathGroup.h"
 
 #include "LinePathItem.h"
@@ -27,18 +29,18 @@ void PathGroupItem::removeItem(ModelTreeItem* item)
     removeRow(item->row());
 }
 
-QList<QAction*> PathGroupItem::getContextActions() const
+QList<QAction*> PathGroupItem::createContextActions()
 {
     QList<QAction*> actions;
 
     // New Line Path
     auto newLine = new QAction("New Line Path");
-    connect(newLine, &QAction::triggered, std::bind(&PathGroupItem::newLinePath, this));
+    QObject::connect(newLine, &QAction::triggered, std::bind(&PathGroupItem::newLinePath, this));
     actions.push_back(newLine);
 
     // New Path Group
     auto newGroup = new QAction("New Path Group");
-    connect(newGroup, &QAction::triggered, std::bind(&PathGroupItem::newPathGroup, this));
+    QObject::connect(newGroup, &QAction::triggered, std::bind(&PathGroupItem::newPathGroup, this));
     actions.push_back(newGroup);
 
     return actions;

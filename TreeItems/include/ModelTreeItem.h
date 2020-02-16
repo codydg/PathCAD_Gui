@@ -25,7 +25,7 @@ public:
 
     // Defined Virtual functions
     virtual void removeItem(ModelTreeItem* item);
-    virtual QList<QAction*> getContextActions() const;
+    virtual QList<QAction*> createContextActions();
 
     // Non-virtual functions
     ModelTreeItemId getId() const;

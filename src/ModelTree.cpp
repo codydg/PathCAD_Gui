@@ -33,7 +33,7 @@ void ModelTree::contextMenuEvent(QContextMenuEvent *event)
         auto item = dynamic_cast<ModelTreeItem*>(dataModel->itemFromIndex(itemIndex));
 
         // Add item-dependant actions
-        menu.addActions(item->getContextActions());
+        menu.addActions(item->createContextActions());
 
         // Add delete action
         auto deleteAction = menu.addAction("Delete");

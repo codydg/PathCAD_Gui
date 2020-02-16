@@ -1,14 +1,11 @@
 #pragma once
 
-#include <QObject>
-
 #include "ModelTreeItem.h"
 
 class PathGroup;
 
-class PathGroupItem : public QObject, public ModelTreeItem
+class PathGroupItem : public ModelTreeItem
 {
-    Q_OBJECT
 public:
     PathGroupItem();
 
@@ -18,7 +15,7 @@ public:
 
     // Overriden Virtual functions
     virtual void removeItem(ModelTreeItem* item) override;
-    virtual QList<QAction*> getContextActions() const override;
+    virtual QList<QAction*> createContextActions() override;
 
     // Non-virtual functions
     void newLinePath();
