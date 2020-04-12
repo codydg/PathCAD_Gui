@@ -10,6 +10,7 @@
 
 enum class ModelTreeItemId
 {
+    DATA_ELEMENT,
     PATH_GROUP,
     LINE_PATH
 };
