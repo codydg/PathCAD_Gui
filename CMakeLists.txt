@@ -16,13 +16,23 @@ find_package(Threads REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 set(SRC_FILES
+    # Main
     src/main.cpp
+
+    # Main Window items
     src/MainWindow.cpp
     src/ModelTree.cpp
-    src/Settings.cpp
+    src/Ribbon.cpp
+    src/Timeline.cpp
+
+    # Dialogs, Popups, etc
     src/SettingsDialog.cpp
+
+    # Misc
+    src/Settings.cpp
     src/res.qrc
 
+    # ModelTree
     TreeItems/src/DataElementItem.cpp
     TreeItems/src/ModelTreeItem.cpp
     TreeItems/src/LinePathItem.cpp
